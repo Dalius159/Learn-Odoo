@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="university_school_form_view" model="ir.ui.view">
+        <field name="name">university.school.form</field>
+        <field name="model">university.school</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>   
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Class" >
+                            <field name="class_ids" widget="one2many_list"/>
+                        </page>
+                    </notebook>
+                </sheet> 
+            </form> 
+        </field> 
+    </record>   
+
+    <!-- Tree View -->
+    <record id="university_school_tree_view" model="ir.ui.view">
+        <field name="name">university.school.tree</field>
+        <field name="model">university.school</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="university_school_search_view" model="ir.ui.view">
+        <field name="name">university.school.search</field>
+        <field name="model">university.school</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Name"/>
+                <field name="code" string="Code"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="university_school_action" model="ir.actions.act_window">
+        <field name="name">School</field>
+        <field name="res_model">university.school</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="university_school_search_view"/>
+    </record>
+</odoo>

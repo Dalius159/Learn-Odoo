@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="university_student_form_view" model="ir.ui.view">
+        <field name="name">university.student.form</field>
+        <field name="model">university.student</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>   
+                            <field name="code"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="school_id" string="School" widget="many2ne_list"/>
+                            <field name="class_id" string="Class" widget="many2ne_list" domain="[('school_id', '=', school_id)]"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Score" >
+                            <group>
+                                <group>
+                                    <field name="math_score"/>
+                                    <field name="physics_score"/>
+                                    <field name="chemistry_score"/>
+                                    <field name="total_score"/>
+                                    <field name="avarage_score"/>
+                                </group>
+                                <group>
+                                    <field name="rank_in_class"/>
+                                    <field name="rank_in_school"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet> 
+            </form> 
+        </field> 
+    </record>
+
+    <!-- Tree View -->
+    <record id="university_student_tree_view" model="ir.ui.view">
+        <field name="name">university.student.tree</field>
+        <field name="model">university.student</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code" width="100"/>
+                <field name="name" width="100"/>
+                <field name="math_score" width="100"/>
+                <field name="physics_score" width="100"/>
+                <field name="chemistry_score" width="100"/>
+                <field name="total_score" width="100"/>
+                <field name="avarage_score" width="100"/>
+                <field name="rank_in_class" width="100"/>
+                <field name="rank_in_school" width="100"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="university_student_search_view" model="ir.ui.view">
+        <field name="name">university.student.search</field>
+        <field name="model">university.student</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Name"/>
+                <field name="code" string="Code"/>
+                <field name="total_score" string="Total scores greater than" filter_domain="[('total_score', '>=', self)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="School" name="school_name" context="{'group_by': 'school_name'}"/>
+                    <filter string="Class" name="class_name" context="{'group_by': 'class_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="university_student_action" model="ir.actions.act_window">
+        <field name="name">Student</field>
+        <field name="res_model">university.student</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

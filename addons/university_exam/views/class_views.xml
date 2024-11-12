@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="university_class_form_view" model="ir.ui.view">
+        <field name="name">university.class.form</field>
+        <field name="model">university.class</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>   
+                        </group>
+                        <group>
+                            <field name="school_id" string="School" widget="many2ne_list"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Student" >
+                            <field name="student_ids" widget="one2many_list" context="{'default_school_id': school_id}"/>
+                        </page>
+                    </notebook>
+                </sheet> 
+            </form> 
+        </field> 
+    </record>
+
+    <!-- Tree View -->
+    <record id="university_class_tree_view" model="ir.ui.view">
+        <field name="name">university.class.tree</field>
+        <field name="model">university.class</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="university_class_search_view" model="ir.ui.view">
+        <field name="name">university.school.search</field>
+        <field name="model">university.class</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Class Name"/>
+                <field name="code" string="Code"/>
+                <group expand="0" string="Group By">
+                    <filter string="School" name="school_name" context="{'group_by': 'school_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="university_class_action" model="ir.actions.act_window">
+        <field name="name">Class</field>
+        <field name="res_model">university.class</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="university_class_search_view"/>
+    </record>
+</odoo>
