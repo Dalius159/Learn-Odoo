@@ -11,30 +11,30 @@ class StockPicking(models.Model):
                 for line in picking.move_ids_without_package:
                     quant = self.env['stock.quant'].search([
                         ('product_id', '=', line.product_id.id),
-                        ('location_id', '=', 27)
+                        ('location_id', '=', 6)
                     ], limit=1)
                     
                     if quant:
                         quant.quantity -= line.quantity
                     else:
-                        self.env['stock.quant'].create({
+                        self.env['stock.quant'].sudo().create({
                             'product_id': line.product_id.id,
-                            'location_id': 27,
+                            'location_id': 6,
                             'quantity': -line.quantity,
                         })            
             elif picking.picking_type_id.code == 'outgoing':
                 for line in picking.move_ids_without_package:
                     quant = self.env['stock.quant'].search([
                         ('product_id', '=', line.product_id.id),
-                        ('location_id', '=', 27)
+                        ('location_id', '=', 6)
                     ], limit=1)
                     
                     if quant:
                         quant.quantity += line.quantity
                     else:
-                        self.env['stock.quant'].create({
+                        self.env['stock.quant'].sudo().create({
                             'product_id': line.product_id.id,
-                            'location_id': 27,
+                            'location_id': 6,
                             'quantity': line.quantity,
                         })
       

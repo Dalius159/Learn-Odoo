@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 
+
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
     
@@ -29,3 +30,13 @@ class PurchaseOrder(models.Model):
         purchase_order.related_sale_order_id = sale_order.id
 
         return purchase_order
+    
+    def button_cancel(self):
+        res = super(PurchaseOrder, self).button_cancel()
+        
+        for purchase_order in self.sudo():
+            if purchase_order.related_sale_order_id:
+                sale_order = purchase_order.sudo().related_sale_order_id
+                sale_order.action_cancel()
+        
+        return res

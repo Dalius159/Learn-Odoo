@@ -1,0 +1,29 @@
+<odoo>
+    <record id="view_stock_report_wizard_form" model="ir.ui.view">
+        <field name="name">stock.report.wizard.form</field>
+        <field name="model">stock.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Transportation Report">
+                <group>
+                    <field name="location_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
+                <footer>
+                    <button string="Export Report" type="object" name="generate_excel_report" class="btn-primary"/>
+                    <button string="Cacel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_stock_report_wizard" model="ir.actions.act_window">
+        <field name="name">custom.report</field>
+        <field name="res_model">stock.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem id="menu_stock_custom_report" name="Custom Report" parent="stock.menu_warehouse_report" action="action_stock_report_wizard"/>
+    
+</odoo>

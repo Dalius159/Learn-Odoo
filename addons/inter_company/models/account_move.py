@@ -12,9 +12,7 @@ class AccountMove(models.Model):
 
         for move in self:
             # if move.move_type == 'in_invoice':
-            #     move = self.env['account.move'].browse(87)
-            #     _logger.info("Aloha: Purchase ID is %s", move.purchase_id.id)
-            #     purchase_order = move.purchase_id
+            #     purchase_order = move.sudo().purchase_id
             #     if purchase_order:
             #         sale_order = purchase_order.related_sale_order_id
                     
@@ -53,7 +51,7 @@ class AccountMove(models.Model):
             if move.move_type == 'out_invoice':
                 sale_order = move.invoice_origin and self.env['sale.order'].sudo().search([('name', '=', move.invoice_origin)], limit=1)
                 if sale_order and sale_order.related_purchase_order_id:
-                    purchase_order = sale_order.related_purchase_order_id
+                    purchase_order = sale_order.sudo().related_purchase_order_id
 
                     if purchase_order.picking_ids.state != 'done':
                         raise ValidationError("The related purchase order must have a done picking before creating the vendor bill.")
