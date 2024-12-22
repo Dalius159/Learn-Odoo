@@ -1,4 +1,3 @@
-id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-access_stock_report_wizard,access_stock_report_wizard,model_stock_report_wizard,base.group_user,1,1,1,1
-access_stock_quant_period,access_stock_quant_period,model_stock_quant_period,base.group_user,1,1,1,1
-
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_workflow_workflow,access.workflow.workflow,model_workflow_workflow,base.group_system,1,1,1,1
+access_workflow_state,access.workflow.state,model_workflow_state,base.group_system,1,1,1,1

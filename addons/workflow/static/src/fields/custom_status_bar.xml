@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    
+    <t t-name="workflow.CustomStatusBar" t-inherit="web.StatusBarField" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_statusbar_status')]" position="before">
+            <div class="o_statusbar_status" style="padding-bottom: 5px">
+                <t t-foreach="selection_items" t-as="item" t-key="item.value">
+                    <button
+                        type="button"
+                        class="btn btn-secondary o_arrow_button"
+                        t-att-class="{ o_first: item_first, o_arrow_button_current: item.isSelected, o_last: item_last,}"
+                        t-att-disabled="props.isDisabled || item.isSelected"
+                        t-esc="item.label"
+                    />
+                </t>
+            </div>  
+        </xpath>
+    </t>
+
+</templates>

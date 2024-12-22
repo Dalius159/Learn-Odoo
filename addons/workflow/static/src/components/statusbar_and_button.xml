@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="workflow.StatusbarAndButton">
+        <div class="o_field_statusbar position-relative d-flex justify-content-between pb-2">
+            <t t-if="show_button">
+                <button type="button" class="btn btn-primary" t-on-click="onApprove">Approve</button>
+            </t>
+
+            <div class="o_statusbar_status">
+                <t t-foreach="selection_items" t-as="item" t-key="item.value">
+                    <button
+                        type="button"
+                        class="btn btn-secondary o_arrow_button"
+                        t-att-class="{
+                            o_first: item.index === 0,
+                            o_arrow_button_current: item.isSelected,
+                            o_last: item.index === selection_items.length - 1,
+                        }"
+                        t-att-disabled="item.isSelected"
+                        t-esc="item.label"
+                    />
+                </t>
+            </div>
+           
+        </div>     
+    </t>
+</templates>
