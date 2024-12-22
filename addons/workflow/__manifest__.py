@@ -12,8 +12,6 @@
     ],
     'assets': {
         'web.assets_backend': [
-            # 'web/static/src/views/fields/statusbar/statusbar_field.scss',
-            # 'web/static/src/views/fields/statusbar/statusbar_field.variables.scss',
             'workflow/static/src/components/*'
             
             # 'workflow/static/src/fields/custom_status_bar.xml',
