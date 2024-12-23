@@ -4,7 +4,7 @@ from odoo import models
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
     
-    
+    # Automatically update the stock quantities when a picking is validated
     def button_validate(self):
         res = super(StockPicking, self).button_validate()
         

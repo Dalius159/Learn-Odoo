@@ -82,7 +82,9 @@ class UniversityStudent(models.Model):
                     student.rank_in_school = rank
                     rank += 1
 
-
+    
+    # Automatically compute the rank in class and rank in school 
+    # when a student is created
     @api.model
     def create(self, vals):
         student = super(UniversityStudent, self).create(vals)

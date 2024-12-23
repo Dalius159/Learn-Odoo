@@ -3,7 +3,7 @@ import { onWillStart, useState } from "@odoo/owl";
 import { StatusBarField } from "@web/views/fields/statusbar/statusbar_field";
 import { patch } from "@web/core/utils/patch";
 
-
+// Solution 1: Extend the StatusBarField component to handle the status bar
 patch(StatusBarField.prototype, {
 
     setup() {

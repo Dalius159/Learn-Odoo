@@ -4,7 +4,7 @@ import { StatusBarButtons } from "@web/views/form/status_bar_buttons/status_bar_
 import { patch } from "@web/core/utils/patch";
 import { StatusBarField } from "@web/views/fields/statusbar/statusbar_field";
 
-
+// Solution 1: Extend the StatusBarButtons component to handle the button
 patch(StatusBarButtons.prototype, {
 
     setup() {

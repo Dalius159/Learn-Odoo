@@ -25,12 +25,13 @@ class StockReportWizard(models.TransientModel):
                 raise UserError(
                     "The 'From Date' cannot be later than today. Please select a valid date range")
 
-
+    # Add a actions needed to generate an Excel report
     def action_genarate_excel(self):
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet("Báo cáo NXT kho")
         
+        # Set column width
         sheet.set_column('A:A', 5)   
         sheet.set_column('B:B', 10)  
         sheet.set_column('C:C', 20)  
@@ -40,7 +41,8 @@ class StockReportWizard(models.TransientModel):
         sheet.set_column('H:I', 14)   
         sheet.set_column('J:K', 14)   
         sheet.set_column('L:M', 14)   
-
+        
+        # Format font
         title_format = workbook.add_format({
             'font_name': 'Calibri', 
             'font_size': 16, 
@@ -62,7 +64,8 @@ class StockReportWizard(models.TransientModel):
             'border': 1, 
             'align': 'right', 
             'indent': 1})
-
+        
+        # Write format data to Excel file
         sheet.write(
             'A1', 
             f'Công ty: {str(self.location_id.company_id.name).upper()}', 
@@ -107,12 +110,14 @@ class StockReportWizard(models.TransientModel):
         sheet.write('M9', '(8)=(2)+4-(6)', header_format)
         sheet.write('A10', str(self.location_id.complete_name), header_format)
         
+        
         final_state = self.action_fetch_final_state(
             self.location_id.id, self.date_to)
         import_export_data = self.compute_import_export(
             self.location_id.id, self.date_from, self.date_to)
         merged_data = {}
         
+        # Merge final state and import/export data
         for product_id, final_data in final_state.items():
             import_data = import_export_data.get(product_id, {
                 'import_qty': 0,
@@ -139,6 +144,7 @@ class StockReportWizard(models.TransientModel):
         total_export_quantity = 0
         total_export_value = 0
         
+        # Write data that are processed to Excel file
         for product_id, data in merged_data.items():
             product = self.env['product.product'].browse(product_id)
             
@@ -177,6 +183,8 @@ class StockReportWizard(models.TransientModel):
         total_initial_quantity = total_final_quantity - total_import_quantity + total_export_quantity
         total_initial_value = total_final_value - total_import_value + total_export_value
         
+        
+        # Write total data at final line to Excel file
         sheet.write(
             'F10', 
             total_initial_quantity if total_initial_quantity !=0 else '-  ', 
@@ -229,7 +237,8 @@ class StockReportWizard(models.TransientModel):
             'target': 'new',
         }
 
-
+    
+    # Add a method to fetch the final state of the stock
     def action_fetch_final_state(self, location_id, to_date):
         final_state = {}
         stock_quants = self.env['stock.quant'].search([('location_id', '=', location_id)])
@@ -241,6 +250,7 @@ class StockReportWizard(models.TransientModel):
                 'value': quant.quantity * cost,  
             }
 
+        # Fetch adjustments to get data at the end of the period
         self.env.cr.execute("""
             SELECT
                 sml.product_id,
@@ -258,7 +268,8 @@ class StockReportWizard(models.TransientModel):
         (location_id, location_id, location_id, location_id, to_date, location_id, location_id))
 
         adjustments = self.env.cr.fetchall()
-
+        
+        # Update the final state array with the adjustments
         for row in adjustments:
             product_id = row[0]
             adjustment_qty = row[1] or 0
@@ -275,8 +286,10 @@ class StockReportWizard(models.TransientModel):
 
         return final_state
 
-
+    
+    # Add a method to compute the import and export movements
     def compute_import_export(self, location_id, from_date, to_date):
+        # Fetch movements between the specified dates
         self.env.cr.execute("""
             SELECT
                 sml.product_id,

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    
+
     <t t-name="workflow.CustomStatusBar" t-inherit="web.StatusBarField" t-inherit-mode="extension" owl="1">
+        <!-- Add new custom statusbar above of existed statusbar -->
         <xpath expr="//div[hasclass('o_statusbar_status')]" position="before">
             <div class="o_statusbar_status" style="padding-bottom: 5px">
                 <t t-foreach="selection_items" t-as="item" t-key="item.value">

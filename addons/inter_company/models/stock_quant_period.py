@@ -24,14 +24,17 @@ class ProductProductInherit(models.Model):
 class StockQuantInherit(models.Model):
     _inherit = 'stock.quant'
 
-
+    # Automatically create a stock quant period 
+    # when a stock quant is created or updated
     @api.model
     def create(self, vals):
         record = super(StockQuantInherit, self).create(vals)
         record.action_create_stock_quant_period()
         return record
 
-
+    
+    # Automatically create a stock quant period
+    # when a stock quant is updated
     def write(self, vals):
         res = super(StockQuantInherit, self).write(vals)
         if 'quantity' in vals:
@@ -39,7 +42,7 @@ class StockQuantInherit(models.Model):
                 record.action_create_stock_quant_period()
         return res
 
-
+     
     def action_create_stock_quant_period(self):
         stock_quant_period_env = self.env['stock.quant.period']
         for record in self:

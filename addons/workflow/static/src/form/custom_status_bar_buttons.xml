@@ -2,13 +2,16 @@
 <templates xml:space="preserve">
 
     <t t-name="workflow.CustomStatusBarButtons" t-inherit="web.StatusBarButtons" t-inherit-mode="extension" owl="1">
+        <!-- Add new custom button above of existed buttons -->
         <xpath expr="//div[hasclass('o_statusbar_buttons')]" position="replace">
             <div class="d-flex flex-column align-items-start gap-1">
+                <!-- New button -->
                 <t t-if="show_button">
                     <button type="button" class="btn btn-primary" t-on-click="onApprove">
                         Approve
                     </button>
                 </t>
+                <!-- Existed buttons-->
                 <div class="o_statusbar_buttons d-flex align-items-center align-content-around flex-wrap gap-1">
                     <t t-foreach="visibleSlotNames" t-as="slot" t-key="slot">
                         <t t-slot="{{ slot }}" />

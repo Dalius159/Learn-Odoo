@@ -20,7 +20,8 @@ class Workflow(models.Model):
         'workflow_id', 
         string="States")
     
-    
+    # for each record of the model
+    # create a related record in custom.state.record
     @api.model
     def create(self, vals):
         res = super(Workflow, self).create(vals)
@@ -40,7 +41,7 @@ class Workflow(models.Model):
             
         return res
     
-    
+    # automatically delete form header when workflow is deleted
     def unlink(self):
         formview = self.env['ir.ui.view'].search([
             ('model', '=', self.model_id.model),
@@ -71,27 +72,24 @@ class Workflow(models.Model):
 
     @api.model
     def action_approve(self, record_id, model_id):
+        # Find the state record of the record
         state_record = self.env['custom.state.record'].search([
             ('model_id.model', '=', model_id), ('res_id', '=', record_id)
         ], limit=1)
-       
+        
+        # Find the current state in state list
         current_state = self.env['custom.workflow.state'].search([
             ('workflow_id', '=', state_record.workflow_id.id),
             ('name', '=', state_record.current_state)
         ], limit=1)
-
-        if not current_state:
-            raise UserError("Current state not found.")
 
         next_state = self.env['custom.workflow.state'].search([
             ('workflow_id', '=', state_record.workflow_id.id),
             ('priority', '>', current_state.priority)
         ], order='priority', limit=1)
 
-        if not next_state:
-            raise UserError("No higher priority state found.")
-
         user = self.env.user
+        # Check if the user has the rights to approve the state
         if current_state.approver_group_id and not user.has_group(
                 current_state.approver_group_id.id):
             raise UserError(
@@ -101,7 +99,7 @@ class Workflow(models.Model):
 
         return True
     
-    
+    # Add a header to the form view of the model
     @api.model
     def action_check_add_header(self):
         formview = self.env['ir.ui.view'].search([
@@ -112,7 +110,9 @@ class Workflow(models.Model):
         if formview:
             arch = formview.arch
             arch_tree = etree.fromstring(arch)
-
+            
+            # If there is no header in the form view
+            # add a header to the form view
             if not arch_tree.find('header'):
                 header_element = etree.Element('header')
                 arch_tree.insert(0, header_element)
