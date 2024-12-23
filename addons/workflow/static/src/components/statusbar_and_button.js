@@ -1,6 +1,7 @@
 import { useService } from "@web/core/utils/hooks";
 import { onWillStart, useState, Component } from "@odoo/owl";
 
+
 export class StatusbarAndButton extends Component {
     static template = "workflow.StatusbarAndButton";
 
@@ -14,13 +15,23 @@ export class StatusbarAndButton extends Component {
         this.getAllStates();
     }
 
+
     async getAllStates() {
-        const workflows = await this.orm.searchRead('custom.workflow', [['model_id.model', '=', this.model]], ['id']);
+        const workflows = await this.orm.searchRead(
+            'custom.workflow', [['model_id.model', '=', this.model]], ['id']);
 
         if (workflows.length > 0) {
-            const stateRecords = await this.orm.searchRead('custom.workflow.state', [['workflow_id', '=', workflows[0].id]], ['name', 'priority']);
+            const stateRecords = await this.orm.searchRead(
+                'custom.workflow.state', 
+                [['workflow_id', '=', workflows[0].id]], 
+                ['name', 'priority']);
             stateRecords.sort((a, b) => b.priority - a.priority);
-            const state_record = await this.orm.searchRead('custom.state.record', [['model_id.model', '=', this.model], ['res_id', '=', this.id]], ['current_state'], { limit: 1 });
+            const state_record = await this.orm.searchRead(
+                'custom.state.record', 
+                [['model_id.model', '=', this.model], 
+                ['res_id', '=', this.id]], 
+                ['current_state'], 
+                { limit: 1 });
             if (state_record && state_record.length > 0) {
                 const stateArray = Object.values(stateRecords);
                 const newStates = [];
@@ -45,7 +56,8 @@ export class StatusbarAndButton extends Component {
             if (state.isSelected && index > 0) {
                 state.isSelected = false;
                 if (previousState) {
-                    this.orm.call('custom.workflow', 'action_approve', [this.id, this.model]);
+                    this.orm.call(
+                        'custom.workflow', 'action_approve', [this.id, this.model]);
                     previousState.isSelected = true;    
                 }
             }

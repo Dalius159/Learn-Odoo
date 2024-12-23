@@ -6,9 +6,9 @@
     'depends': ['base'],
     'data': [
         'data/ir.model.access.csv',
-        'views/school_views.xml',
-        'views/class_views.xml',
-        'views/student_views.xml',
-        'views/university_menus.xml',
+        'views/university_school.xml',
+        'views/university_class.xml',
+        'views/university_student.xml',
+        'views/menus.xml',
     ],
 }

@@ -4,39 +4,38 @@
         <field name="model">custom.state.record</field>
         <field name="arch" type="xml">
             <list string="Track Record State">
-                <field name="workflow_id"/>
-                <field name="model_id"/>
-                <field name="res_id"/>
+                <field name="workflow_id" required="true"/>
+                <field name="model_id" required="true"/>
+                <field name="res_id" required="true"/>
 
             </list>
         </field>
     </record>
 
-    <odoo>
-        <data>
-            <record id="view_custom_state_record_form" model="ir.ui.view">
-                <field name="name">custom.state.record.form</field>
-                <field name="model">custom.state.record</field>
-                <field name="arch" type="xml">
-                    <form>
-                        <sheet>
-                            <group>
-                                <field name="model_id"/>
-                                <field name="res_id"/>
-                                <field name="current_state"/>
-                            </group>
-                        </sheet>
-                    </form>
-                </field>
-            </record>
-        </data>
-    </odoo>
+    
+    <record id="view_custom_state_record_form" model="ir.ui.view">
+        <field name="name">custom.state.record.form</field>
+        <field name="model">custom.state.record</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="model_id"/>
+                        <field name="res_id"/>
+                        <field name="current_state"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+      
 
     <record id="custom_state_record_action" model="ir.actions.act_window">
         <field name="name">Custom state record</field>
         <field name="res_model">custom.state.record</field>
         <field name="view_mode">list,form</field>
     </record>
+
 
     <data>
         <menuitem id="root_menu" name="Workflow">

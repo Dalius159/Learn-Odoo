@@ -2,7 +2,9 @@ import { patch } from "@web/core/utils/patch";
 import { FormCompiler } from "@web/views/form/form_compiler";
 import { createElement } from "@web/core/utils/xml";
 
+
 patch(FormCompiler.prototype ,{
+    
     compileHeader(el, params){
         let res = super.compileHeader(el, params);
 

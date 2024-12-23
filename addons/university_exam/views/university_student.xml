@@ -9,21 +9,24 @@
                 <sheet>
                     <group>
                         <group>   
-                            <field name="code"/>
-                            <field name="name"/>
+                            <field name="code" required="true"/>
+                            <field name="name" required="true"/>
                         </group>
                         <group>
                             <field name="school_id" string="School" widget="many2ne_list"/>
-                            <field name="class_id" string="Class" widget="many2ne_list" domain="[('school_id', '=', school_id)]"/>
+                            <field name="class_id" 
+                                string="Class" 
+                                widget="many2ne_list" 
+                                domain="[('school_id', '=', school_id)]"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Score" >
                             <group>
                                 <group>
-                                    <field name="math_score"/>
-                                    <field name="physics_score"/>
-                                    <field name="chemistry_score"/>
+                                    <field name="math_score" required="true"/>
+                                    <field name="physics_score" required="true"/>
+                                    <field name="chemistry_score" required="true"/>
                                     <field name="total_score"/>
                                     <field name="avarage_score"/>
                                 </group>
@@ -38,6 +41,7 @@
             </form> 
         </field> 
     </record>
+
 
     <!-- Tree View -->
     <record id="university_student_tree_view" model="ir.ui.view">
@@ -58,6 +62,7 @@
         </field>
     </record>
 
+
     <!-- Search View -->
     <record id="university_student_search_view" model="ir.ui.view">
         <field name="name">university.student.search</field>
@@ -66,7 +71,9 @@
             <search>
                 <field name="name" string="Name"/>
                 <field name="code" string="Code"/>
-                <field name="total_score" string="Total scores greater than" filter_domain="[('total_score', '>=', self)]"/>
+                <field name="total_score" 
+                    string="Total scores greater than" 
+                    filter_domain="[('total_score', '>=', self)]"/>
                 <group expand="0" string="Group By">
                     <filter string="School" name="school_name" context="{'group_by': 'school_name'}"/>
                     <filter string="Class" name="class_name" context="{'group_by': 'class_name'}"/>
@@ -74,6 +81,7 @@
             </search>
         </field>
     </record>
+
 
     <!-- Action -->
     <record id="university_student_action" model="ir.actions.act_window">

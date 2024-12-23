@@ -5,23 +5,28 @@ from odoo import models, fields, api
 from odoo.exceptions import UserError
 from datetime import datetime
 
+
 class StockReportWizard(models.TransientModel):
     _name = 'stock.report.wizard'
     _description = 'Stock Report Wizard'
 
-    location_id = fields.Many2one('stock.location', string='Location', required=True)
-    date_from = fields.Datetime(string='From Date', required=True)
-    date_to = fields.Datetime(string='To Date', required=True)
+    location_id = fields.Many2one('stock.location', string='Location')
+    date_from = fields.Datetime(string='From Date')
+    date_to = fields.Datetime(string='To Date')
+    
 
     @api.constrains('date_from', 'date_to')
     def _check_dates(self):
         for record in self:
             if record.date_from > record.date_to:
-                raise UserError("The 'From Date' cannot be later than the 'To Date'. Please select a valid date range.")
+                raise UserError(
+                    "The 'From Date' cannot be later than the 'To Date'. Please select a valid date range")
             if self.date_from > datetime.now():
-                raise UserError("The 'From Date' cannot be later than today. Please select a valid date range.")
+                raise UserError(
+                    "The 'From Date' cannot be later than today. Please select a valid date range")
 
-    def generate_excel_report(self):
+
+    def action_genarate_excel(self):
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet("Báo cáo NXT kho")
@@ -36,14 +41,40 @@ class StockReportWizard(models.TransientModel):
         sheet.set_column('J:K', 14)   
         sheet.set_column('L:M', 14)   
 
-        title_format = workbook.add_format({'font_name': 'Calibri', 'font_size': 16, 'bold': True})
-        second_format = workbook.add_format({'font_name': 'Times New Roman', 'font_size': 15, 'bold': True})
-        header_format = workbook.add_format({'font_name': 'Times New Roman', 'font_size': 12, 'bold': True,'border': 1, 'indent': 1, 'align': 'center'})
-        cell_format = workbook.add_format({'font_name': 'Times New Roman', 'font_size': 11,'border': 1, 'align': 'right', 'indent': 1})
+        title_format = workbook.add_format({
+            'font_name': 'Calibri', 
+            'font_size': 16, 
+            'bold': True})
+        second_format = workbook.add_format({
+            'font_name': 'Times New Roman', 
+            'font_size': 15, 
+            'bold': True})
+        header_format = workbook.add_format({
+            'font_name': 'Times New Roman', 
+            'font_size': 12, 
+            'bold': True,
+            'border': 1, 
+            'indent': 1, 
+            'align': 'center'})
+        cell_format = workbook.add_format({
+            'font_name': 'Times New Roman', 
+            'font_size': 11,
+            'border': 1, 
+            'align': 'right', 
+            'indent': 1})
 
-        sheet.write('A1', f'Công ty: {str(self.location_id.company_id.name).upper()}', second_format)
-        sheet.write('A4', 'BÁO CÁO NHẬP XUẤT TỒN KHO HÀNG HÓA', title_format)
-        sheet.write('A5', f'Từ ngày: {self.date_from} - Đến ngày: {self.date_to}', second_format)
+        sheet.write(
+            'A1', 
+            f'Công ty: {str(self.location_id.company_id.name).upper()}', 
+            second_format)
+        sheet.write(
+            'A4', 
+            'BÁO CÁO NHẬP XUẤT TỒN KHO HÀNG HÓA', 
+            title_format)
+        sheet.write(
+            'A5', 
+            f'Từ ngày: {self.date_from} - Đến ngày: {self.date_to}', 
+            second_format)
         sheet.merge_range('A7:A8', 'STT', header_format)
         sheet.merge_range('B7:B8', 'Mã hàng', header_format)
         sheet.merge_range('C7:C8', 'Tên hàng', header_format)
@@ -76,8 +107,10 @@ class StockReportWizard(models.TransientModel):
         sheet.write('M9', '(8)=(2)+4-(6)', header_format)
         sheet.write('A10', str(self.location_id.complete_name), header_format)
         
-        final_state = self.fetch_final_state(self.location_id.id, self.date_to)
-        import_export_data = self.compute_import_export(self.location_id.id, self.date_from, self.date_to)
+        final_state = self.action_fetch_final_state(
+            self.location_id.id, self.date_to)
+        import_export_data = self.compute_import_export(
+            self.location_id.id, self.date_from, self.date_to)
         merged_data = {}
         
         for product_id, final_data in final_state.items():
@@ -144,14 +177,38 @@ class StockReportWizard(models.TransientModel):
         total_initial_quantity = total_final_quantity - total_import_quantity + total_export_quantity
         total_initial_value = total_final_value - total_import_value + total_export_value
         
-        sheet.write('F10', total_initial_quantity if total_initial_quantity !=0 else '-  ', header_format)
-        sheet.write('G10', total_import_value if total_initial_value !=0 else '-  ', header_format)
-        sheet.write('H10', total_import_quantity if total_import_quantity !=0 else '-  ', header_format)
-        sheet.write('I10', total_import_value if total_import_value !=0 else '-  ', header_format)
-        sheet.write('J10', total_export_quantity if total_export_quantity !=0 else '-  ', header_format)
-        sheet.write('K10', total_export_value if total_export_value !=0 else '-  ', header_format)
-        sheet.write('L10', total_final_quantity if total_final_quantity !=0 else '-  ', header_format)
-        sheet.write('M10', total_final_value if total_final_value !=0 else '-  ', header_format)
+        sheet.write(
+            'F10', 
+            total_initial_quantity if total_initial_quantity !=0 else '-  ', 
+            header_format)
+        sheet.write(
+            'G10', 
+            total_import_value if total_initial_value !=0 else '-  ', 
+            header_format)
+        sheet.write(
+            'H10', 
+            total_import_quantity if total_import_quantity !=0 else '-  ', 
+            header_format)
+        sheet.write(
+            'I10', 
+            total_import_value if total_import_value !=0 else '-  ', 
+            header_format)
+        sheet.write(
+            'J10', 
+            total_export_quantity if total_export_quantity !=0 else '-  ', 
+            header_format)
+        sheet.write(
+            'K10', 
+            total_export_value if total_export_value !=0 else '-  ', 
+            header_format)
+        sheet.write(
+            'L10', 
+            total_final_quantity if total_final_quantity !=0 else '-  ', 
+            header_format)
+        sheet.write(
+            'M10', 
+            total_final_value if total_final_value !=0 else '-  ', 
+            header_format)
         
         workbook.close()
         output.seek(0)
@@ -172,7 +229,8 @@ class StockReportWizard(models.TransientModel):
             'target': 'new',
         }
 
-    def fetch_final_state(self, location_id, to_date):
+
+    def action_fetch_final_state(self, location_id, to_date):
         final_state = {}
         stock_quants = self.env['stock.quant'].search([('location_id', '=', location_id)])
         for quant in stock_quants:
@@ -196,7 +254,8 @@ class StockReportWizard(models.TransientModel):
             AND sml.state = 'done'
             AND (sml.location_id = %s OR sml.location_dest_id = %s)
             GROUP BY sml.product_id
-        """, (location_id, location_id, location_id, location_id, to_date, location_id, location_id))
+        """, 
+        (location_id, location_id, location_id, location_id, to_date, location_id, location_id))
 
         adjustments = self.env.cr.fetchall()
 
@@ -216,6 +275,7 @@ class StockReportWizard(models.TransientModel):
 
         return final_state
 
+
     def compute_import_export(self, location_id, from_date, to_date):
         self.env.cr.execute("""
             SELECT
@@ -230,7 +290,8 @@ class StockReportWizard(models.TransientModel):
             AND sml.state = 'done'
             AND (sml.location_id = %s OR sml.location_dest_id = %s)
             GROUP BY sml.product_id
-        """, (location_id, location_id, location_id, location_id, from_date, to_date, location_id, location_id))
+        """, 
+        (location_id, location_id, location_id, location_id, from_date, to_date, location_id, location_id))
 
         movements = self.env.cr.fetchall()
 

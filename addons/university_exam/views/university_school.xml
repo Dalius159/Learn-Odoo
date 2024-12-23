@@ -9,10 +9,10 @@
                 <sheet>
                     <group>
                         <group>   
-                            <field name="code"/>
+                            <field name="code" required="true"/>
                         </group>
                         <group>
-                            <field name="name"/>
+                            <field name="name" required="true"/>
                         </group>
                     </group>
                     <notebook>
@@ -24,6 +24,7 @@
             </form> 
         </field> 
     </record>   
+
 
     <!-- Tree View -->
     <record id="university_school_tree_view" model="ir.ui.view">
@@ -37,6 +38,7 @@
         </field>
     </record>
 
+
     <!-- Search View -->
     <record id="university_school_search_view" model="ir.ui.view">
         <field name="name">university.school.search</field>
@@ -48,6 +50,7 @@
             </search>
         </field>
     </record>
+
 
     <!-- Action -->
     <record id="university_school_action" model="ir.actions.act_window">

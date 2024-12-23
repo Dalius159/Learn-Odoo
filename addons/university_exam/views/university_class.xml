@@ -9,22 +9,28 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="code"/>
-                            <field name="name"/>   
+                            <field name="code" required="true"/>
+                            <field name="name" required="true"/>   
                         </group>
                         <group>
-                            <field name="school_id" string="School" widget="many2ne_list"/>
+                            <field name="school_id" 
+                                string="School" 
+                                widget="many2ne_list" 
+                                required="true"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Student" >
-                            <field name="student_ids" widget="one2many_list" context="{'default_school_id': school_id}"/>
+                            <field name="student_ids" 
+                                widget="one2many_list" 
+                                context="{'default_school_id': school_id}"/>
                         </page>
                     </notebook>
                 </sheet> 
             </form> 
         </field> 
     </record>
+
 
     <!-- Tree View -->
     <record id="university_class_tree_view" model="ir.ui.view">
@@ -38,6 +44,7 @@
         </field>
     </record>
 
+
     <!-- Search View -->
     <record id="university_class_search_view" model="ir.ui.view">
         <field name="name">university.school.search</field>
@@ -47,11 +54,14 @@
                 <field name="name" string="Class Name"/>
                 <field name="code" string="Code"/>
                 <group expand="0" string="Group By">
-                    <filter string="School" name="school_name" context="{'group_by': 'school_name'}"/>
+                    <filter string="School" 
+                        name="school_name" 
+                        context="{'group_by': 'school_name'}"/>
                 </group>
             </search>
         </field>
     </record>
+
 
     <!-- Action -->
     <record id="university_class_action" model="ir.actions.act_window">

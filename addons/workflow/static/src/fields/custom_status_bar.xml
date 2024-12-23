@@ -8,7 +8,10 @@
                     <button
                         type="button"
                         class="btn btn-secondary o_arrow_button"
-                        t-att-class="{ o_first: item_first, o_arrow_button_current: item.isSelected, o_last: item_last,}"
+                        t-att-class="{ 
+                            o_first: item_first, 
+                            o_arrow_button_current: item.isSelected, 
+                            o_last: item_last,}"
                         t-att-disabled="props.isDisabled || item.isSelected"
                         t-esc="item.label"
                     />
@@ -16,5 +19,4 @@
             </div>  
         </xpath>
     </t>
-
 </templates>
