@@ -19,7 +19,8 @@ class AwesomeDashboard extends Component {
         this.dialog = useService("dialog");
         this.items = registry.category("awesome_dashboard").getAll();
         this.state = useState({
-            disabledItems: browser.localStorage.getItem("disabledDashboardItems")?.split(",") || []
+            disabledItems: browser.localStorage.getItem(
+                "disabledDashboardItems")?.split(",") || []
         });
     }
 
@@ -55,7 +56,11 @@ class AwesomeDashboard extends Component {
 class ConfigurationDialog extends Component {
     static template = "awesome_dashboard.ConfigurationDialog";
     static components = { Dialog, CheckBox };
-    static props = ["close", "items", "disabledItems", "onUpdateConfiguration"];
+    static props = [
+        "close", 
+        "items", 
+        "disabledItems", 
+        "onUpdateConfiguration"];
     setup() {
         this.items = useState(this.props.items.map((item) => {
             return {
@@ -80,4 +85,5 @@ class ConfigurationDialog extends Component {
     }
 }
 
-registry.category("lazy_components").add("AwesomeDashboard", AwesomeDashboard);
+registry.category("lazy_components").add(
+    "AwesomeDashboard", AwesomeDashboard);

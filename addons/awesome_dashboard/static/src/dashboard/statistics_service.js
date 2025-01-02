@@ -15,5 +15,6 @@ const statisticsService = {
     },
 };
 
-registry.category("services").add("awesome_dashboard.statistics", statisticsService);
+registry.category("services").add(
+    "awesome_dashboard.statistics", statisticsService);
 
