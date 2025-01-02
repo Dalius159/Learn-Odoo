@@ -17,7 +17,7 @@ class AwesomeDashboard extends Component {
             controlPanel: {},
         };
         this.dialog = useService("dialog");
-        this.items = registry.category("awesome_dashboard").getAll();;
+        this.items = registry.category("awesome_dashboard").getAll();
         this.state = useState({
             disabledItems: browser.localStorage.getItem("disabledDashboardItems")?.split(",") || []
         });

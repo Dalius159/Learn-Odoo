@@ -61,4 +61,6 @@ const items = [
 
 items.forEach(item => {
     registry.category("awesome_dashboard").add(item.id, item);
+    console.log(`Registered dashboard item: ${item.id}`);
+    debugger;
 });
