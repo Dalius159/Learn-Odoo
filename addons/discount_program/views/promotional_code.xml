@@ -11,7 +11,10 @@
                         <field name="discount_percentage" required="true"/>
                         <field name="valid_from" required="true"/>
                         <field name="valid_to" required="true"/>
-                        <field name="customer_id" widget="many2one_lists" required="true"/>
+                        <field 
+                            name="customer_id" 
+                            widget="many2one_lists" 
+                            required="true"/>
                         <field name="active"/>
                     </group>
                 </sheet> 

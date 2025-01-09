@@ -34,7 +34,7 @@ class PromotionalCode(models.Model):
         pricelist_vals = {
             'name': res.name,
             'code': res.mkm_code,
-            # 'x_customer_id': res.customer_id.id,
+            'x_customer_id': res.customer_id.id,
             'item_ids':[
             (0, 0, {
                 'display_applied_on': '1_product',
@@ -44,10 +44,7 @@ class PromotionalCode(models.Model):
                 'date_end': res.valid_to,  
             })]
         }
-        pricelist = self.env['product.pricelist'].sudo().create(pricelist_vals)
-
-        # Liên kết pricelist với bản ghi mới
-        # vals['pricelist_id'] = pricelist.id
+        self.env['product.pricelist'].sudo().create(pricelist_vals)
 
         return res
     

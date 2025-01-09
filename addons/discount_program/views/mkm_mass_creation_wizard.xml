@@ -17,14 +17,23 @@
                     <field name="valid_to" required="true"/>
                 </group>
                 <footer>
-                    <button string="Create MKM Codes" type="object" name="create_mass_mkm" class="btn-primary"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button 
+                        string="Create MKM Codes" 
+                        type="object" 
+                        name="create_mass_mkm" 
+                        class="btn-primary"/>
+                    <button 
+                        string="Cancel" 
+                        class="btn-secondary" 
+                        special="cancel"/>
                 </footer>
             </form>
         </field>
     </record>
 
-    <record id="action_open_mkm_mass_creation_wizard" model="ir.actions.act_window">
+    <record 
+            id="action_open_mkm_mass_creation_wizard" 
+            model="ir.actions.act_window">
         <field name="name">Mass Creation</field>
         <field name="res_model">mkm.mass.creation.wizard</field>
         <field name="view_mode">form</field>
