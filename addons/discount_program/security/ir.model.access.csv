@@ -1,2 +1,4 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 access_promotional_code,access_promotional_code,model_promotional_code,base.group_user,1,1,1,1
+access_mkm_mass_creation_wizard,access_mkm_mass_creation_wizard,model_mkm_mass_creation_wizard,base.group_user,1,1,1,1
+access_sale_order_mkm_field_access,discount_program.access_sale_order_mkm_field_access,model_sale_order,discount_program.group_mkm_field_access,1,1,1,1

@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <menuitem id="root_menu_promotion_code" name="Promotion">
+            <menuitem 
+                action="promotional_code_action" 
+                id="promotional_code_menu" />
+            <menuitem 
+                action="action_open_mkm_mass_creation_wizard" 
+                id="mass_mkm_creation_menu"/>
+        </menuitem>
+
+        <menuitem 
+            id="foreign_promotion_sale" 
+            parent="sale.sale_menu_root" 
+            name="Promotional" 
+            action="promotional_code_action"/>
+    </data>
+</odoo>

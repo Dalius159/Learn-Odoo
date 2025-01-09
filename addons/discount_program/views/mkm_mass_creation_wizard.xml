@@ -1,0 +1,33 @@
+<odoo>
+    <record id="view_mkm_mass_creation_wizard_form" model="ir.ui.view">
+        <field name="name">mkm.mass.creation.wizard.form</field>
+        <field name="model">mkm.mass.creation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Bulk MKM Code Creation">
+                <group>
+                    <field name="target_type" required="true"/>
+                </group>
+                <group invisible="target_type != 'selected_customers'">
+                    <field name="customer_ids" widget="many2many_tags"/>
+                </group>
+                <group>
+                    <field name="name" required="true"/>
+                    <field name="discount_percentage" required="true"/>
+                    <field name="valid_from" required="true"/>
+                    <field name="valid_to" required="true"/>
+                </group>
+                <footer>
+                    <button string="Create MKM Codes" type="object" name="create_mass_mkm" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_open_mkm_mass_creation_wizard" model="ir.actions.act_window">
+        <field name="name">Mass Creation</field>
+        <field name="res_model">mkm.mass.creation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

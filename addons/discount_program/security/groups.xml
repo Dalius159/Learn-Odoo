@@ -1,0 +1,6 @@
+<odoo>
+    <record id="module_category_promotional_codes" model="ir.module.category">
+        <field name="name">Promotional Codes</field>
+        <field name="sequence">10</field>
+    </record>
+</odoo>

@@ -1,0 +1,8 @@
+<odoo>
+    <record id="group_mkm_field_access" model="res.groups">
+        <field name="name">MKM Field Access</field>
+        <field 
+            name="category_id" 
+            ref="discount_program.module_category_promotional_codes"/>
+    </record>
+</odoo>

@@ -7,10 +7,11 @@
             <form>
                 <sheet>
                     <group>
+                        <field name="name" required="true"/>
                         <field name="discount_percentage" required="true"/>
                         <field name="valid_from" required="true"/>
                         <field name="valid_to" required="true"/>
-                        <field name="customer_id" widget="many2one_lists"/>
+                        <field name="customer_id" widget="many2one_lists" required="true"/>
                         <field name="active"/>
                     </group>
                 </sheet> 
@@ -23,12 +24,16 @@
         <field name="model">promotional.code</field>
         <field name="arch" type="xml">
             <list>
-                <field name="mkm_code"/>
-                <field name="discount_percentage"/>
-                <field name="valid_from"/>
-                <field name="valid_to"/>
-                <field name="customer_id"/>
-                <field name="active"/>
+                <field name="name" width = "100"/>
+                <field name="mkm_code" width = "50" 
+                    groups="discount_program.group_mkm_field_access"/>
+                <field name="discount_percentage" width = "100"/>
+                <field name="valid_from" width = "100" 
+                    groups="discount_program.group_mkm_field_access"/>
+                <field name="valid_to" width = "100" 
+                    groups="discount_program.group_mkm_field_access"/>
+                <field name="active" width = "100" 
+                    groups="discount_program.group_mkm_field_access"/>
             </list>
         </field>
     </record>
@@ -37,6 +42,6 @@
         <field name="name">Promotional Code</field>
         <field name="res_model">promotional.code</field>
         <field name="view_mode">list,form</field>
+        <field name="context">{'group_by': 'customer_id'}</field>
     </record>
-    
 </odoo>

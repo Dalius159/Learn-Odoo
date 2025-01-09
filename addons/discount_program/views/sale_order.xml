@@ -1,0 +1,32 @@
+<odoo>
+    <record id="promotional_sale_order_view" model="ir.ui.view">
+        <field name="name">sale.order.form.promo</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group//group" position="inside">
+                <field name="x_discount_name" 
+                    invisible="x_promotional_code_id == False"/>
+                <field 
+                    name="x_mkm_code" 
+                    placeholder="Enter MKM Code" 
+                    invisible="x_promotional_code_id or state != 'draft'"/>
+                <button 
+                    name="action_apply_promo" 
+                    string="Apply Discount" 
+                    type="object" 
+                    class="btn btn-primary"
+                    invisible="x_promotional_code_id or state != 'draft'"/>
+            </xpath>
+
+            <xpath expr="//group[contains(@class, 'order-1 order-lg-0')]" position="inside">
+                    <button 
+                        name="action_remove_promo" 
+                        string="Cancel Coupon" 
+                        type="object" 
+                        class="btn btn-primary"
+                        invisible="x_promotional_code_id == False or state != 'draft'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
